@@ -29,6 +29,13 @@ pipeline {
                                  }
                              }
                          }
+
+                 stage("Quality gate") {
+                             steps {
+                                  waitForQualityGate abortPipeline: true
+                               }
+                           }
+
          stage('Deliver') {
              steps {
              echo 'Deployment Successful!!'
