@@ -35,7 +35,6 @@ pipeline {
                                        dependencyCheck additionalArguments: '''
                                            --out "./"
                                            --scan "./"
-                                           --noupdate
                                            --format "ALL"
                                            --prettyPrint''', odcInstallation: 'OWASP-DC'
                                        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
