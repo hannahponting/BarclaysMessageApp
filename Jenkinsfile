@@ -30,17 +30,19 @@ pipeline {
                              }
                          }
 
-                 stage ('OWASP Dependency-Check Vulnerabilities') {
-                                     steps {
-                                         dependencyCheck additionalArguments: '''
-                                             --out "./"
-                                             --scan "./"
-                                             --noupdate
-                                             --format "ALL"
-                                             --prettyPrint''', odcInstallation: 'dependency-check'
-                                         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-                                     }
-                         }
+               stage ('OWASP Dependency-Check Vulnerabilities') {
+                                   steps {
+                                       dependencyCheck additionalArguments: '''
+                                           --out "./"
+                                           --scan "./"
+                                           --nvdApiKey "e88f4b9e-bf01-410a-8351-e1089ceaafcd"
+                                           --noupdate
+                                           --format "ALL"
+                                           --prettyPrint''', odcInstallation: 'OWASP-DC'
+                                       dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                                   }
+                       }
+
                  stage("Quality gate") {
                              steps {
                                   waitForQualityGate abortPipeline: true
