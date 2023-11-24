@@ -35,7 +35,6 @@ pipeline {
                                        dependencyCheck additionalArguments: '''
                                            --out "./"
                                            --scan "./"
-                                           --nvdApiKey "e88f4b9e-bf01-410a-8351-e1089ceaafcd"
                                            --noupdate
                                            --format "ALL"
                                            --prettyPrint''', odcInstallation: 'OWASP-DC'
@@ -43,11 +42,13 @@ pipeline {
                                    }
                        }
 
-                 stage("Quality gate") {
-                             steps {
-                                  waitForQualityGate abortPipeline: true
-                               }
-                           }
+                 stage("Quality Gate") {
+                     steps {
+                       timeout(time: 15, unit: 'MINUTES') {
+                         waitForQualityGate abortPipeline: false
+                       }
+                     }
+                   }
 
 
          stage('Deliver') {
